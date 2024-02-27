@@ -13,8 +13,18 @@ app.post('/chat/completions', (req: Request, res: Response) => {
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
 
-  // Example usage:
-  const exampleString = "```javascript\nimport 'hi';\nprint('hello, friend!')\n```";
+  const exampleString = `import React from 'react' // react@18
+
+export default function App() {
+  return (
+    <div className="p-2">
+      <h1 className="text-3xl font-extrabold tracking-tight lg:text-4xl">
+        My Amazing React App
+      </h1>
+    </div>
+  )
+}`;
+
   const chunkSize = 3; // Define the size of each chunk.
   
   const dataStream = createDataStream(exampleString, chunkSize);
@@ -34,7 +44,7 @@ app.post('/chat/completions', (req: Request, res: Response) => {
       if (index === dataStream.length - 1) {
         stream.push(null); // Close the stream
       }
-    }, 250 * index); // Simulate a delay between each chunk
+    }, 10 * index); // Simulate a delay between each chunk
   });
 
   // Pipe the stream to the response
